@@ -1,34 +1,49 @@
-import { useState } from "react";
+import { useState, ChangeEvent, MouseEvent } from "react";
 
 import "../styles/form.css";
 
 function Form() {
-  const [todo, setTodo] = useState<string>("");
+  const [todos, setTodos] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
 
-  const handleInputChange = (event) => {
-    setTodo(event.target.value);
+  console.log(todos);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
   };
 
-  const handleButton = (event) => {
+  const handleButton = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log("Yeni görev:", todo);
+
+    if (inputValue.trim() === "") return;
+    setTodos([...todos, inputValue]);
+    setInputValue("");
+    console.log("Yeni görev:", todos);
   };
 
   return (
-    <form className="form">
-      <label>
-        <input
-          type="text"
-          name="todo"
-          id="todo"
-          placeholder="Write your next task"
-          value={todo}
-          onChange={handleInputChange}
-        />
-      </label>
+    <div>
+      <form className="form">
+        <label>
+          <input
+            type="text"
+            name="todos"
+            id="todos"
+            placeholder="Write your next task"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+        </label>
 
-      <button onClick={handleButton}>+</button>
-    </form>
+        <button onClick={handleButton}>+</button>
+      </form>
+
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 export default Form;
