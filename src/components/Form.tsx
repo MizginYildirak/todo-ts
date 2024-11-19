@@ -38,9 +38,26 @@ function Form() {
         <button onClick={handleButton}>+</button>
       </form>
 
-      <ul>
+      <ul
+        style={{
+          marginTop: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
         {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
+          <li
+            style={{
+              textAlign: "start",
+              listStyleType: "none",
+              border: "1px solid #88ab55",
+              padding: "15px",
+            }}
+            key={index}
+          >
+            {todo}
+          </li>
         ))}
       </ul>
     </div>
