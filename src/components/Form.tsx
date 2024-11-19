@@ -1,12 +1,17 @@
 import { useState, ChangeEvent, MouseEvent } from "react";
+import TODOList from "./TODOList"
 
 import "../styles/form.css";
 
-function Form() {
-  const [todos, setTodos] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
+interface Todo {
+  id: number,
+  task: string,
+  completed: boolean
+}
 
-  console.log(todos);
+function Form() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -16,10 +21,19 @@ function Form() {
     event.preventDefault();
 
     if (inputValue.trim() === "") return;
-    setTodos([...todos, inputValue]);
+
+    const newTodo: Todo = {
+      id: todos.length + 1,
+      task: inputValue,
+      completed: false
+    }
+
+    console.log(newTodo)
+
+    setTodos([...todos, newTodo]);
     setInputValue("");
     console.log("Yeni görev:", todos);
-  };
+  }
 
   return (
     <div>
@@ -38,28 +52,7 @@ function Form() {
         <button onClick={handleButton}>+</button>
       </form>
 
-      <ul
-        style={{
-          marginTop: "20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
-        {todos.map((todo, index) => (
-          <li
-            style={{
-              textAlign: "start",
-              listStyleType: "none",
-              border: "1px solid #88ab55",
-              padding: "15px",
-            }}
-            key={index}
-          >
-            {todo}
-          </li>
-        ))}
-      </ul>
+    <TODOList todos={todos}/>
     </div>
   );
 }
