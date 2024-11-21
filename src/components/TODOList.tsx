@@ -1,22 +1,30 @@
-import React, { useState } from "react";
-import { FiEdit } from "react-icons/fi";
-import { AiFillDelete } from "react-icons/ai";
+import React, { useState } from "react"
+import { FiEdit } from "react-icons/fi"
+import { AiFillDelete } from "react-icons/ai"
 
 interface Todo {
-  id: number;
-  task: string;
-  completed: boolean;
+  id: number
+  task: string
+  completed: boolean
 }
 
 interface TODOListProps {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todos: Todo[]
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
 }
 
 function TODOList({ todos, setTodos }: TODOListProps) {
   const handleDeleteButton = (id: number) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
+  };
+
+  const toggleCompleted = (id: number) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   return (
@@ -38,20 +46,24 @@ function TODOList({ todos, setTodos }: TODOListProps) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            backgroundColor: todo.completed ? "black" : "black", 
           }}
           key={todo.id}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleCompleted(todo.id)}
+              style={{ cursor: "pointer" }}
+            />
+            <span
               style={{
-                width: "30px",
-                height: "30px",
-                border: "1px solid green",
-                borderRadius: "50%",
-                cursor: "pointer",
+                textDecoration: todo.completed ? "line-through" : "none",
               }}
-            ></div>
-            {todo.task}
+            >
+              {todo.task}
+            </span>
           </div>
           <div
             style={{
@@ -61,7 +73,7 @@ function TODOList({ todos, setTodos }: TODOListProps) {
               gap: "10px",
             }}
           >
-            <FiEdit style={{ fontSize: "25px" }} />
+            <FiEdit style={{ fontSize: "25px", cursor: "pointer" }} />
             <AiFillDelete
               onClick={() => handleDeleteButton(todo.id)}
               style={{ fontSize: "25px", cursor: "pointer" }}
@@ -73,4 +85,5 @@ function TODOList({ todos, setTodos }: TODOListProps) {
   );
 }
 
-export default TODOList;
+
+export default TODOList
