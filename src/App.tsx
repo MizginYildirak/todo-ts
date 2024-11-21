@@ -20,7 +20,7 @@ function App() {
       <Header />
       <TODOHero todos_completed={0} total_todos={0} />
       <Form todos={todos} setTodos={setTodos} />
-      <TODOList  todos={todos} setTodos={setTodos}/>
+      <TODOList todos={todos} setTodos={setTodos}/>
     </div>
   );
 }

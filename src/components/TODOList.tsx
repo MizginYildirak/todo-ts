@@ -15,7 +15,6 @@ interface TODOListProps {
 
 function TODOList({ todos, setTodos }: TODOListProps) {
   const handleDeleteButton = (id: number) => {
-    // Elemanı filtreleyerek sil
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };

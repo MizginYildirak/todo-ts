@@ -13,6 +13,7 @@ interface FormProps {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
+//the object taken must be the FormProps type
 function Form({ todos, setTodos }: FormProps) {
   const [inputValue, setInputValue] = useState<string>("");
 
